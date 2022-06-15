@@ -35,6 +35,11 @@ async function updateSergio() {
 }
 
 async function main() {
+  console.log(`DB url: ${process.env.DATABASE_URL}`);
+
+  app.get("/users", async (req, res) => {
+    res.send("You made it :)");
+  });
   app.get("/users", async (req, res) => {
     // Connect the client
     await prisma.$connect();
