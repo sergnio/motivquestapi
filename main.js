@@ -1,5 +1,8 @@
 // noinspection ES6CheckImport
 import { PrismaClient } from "@prisma/client";
+import express from "express";
+const app = express();
+const port = 3000;
 
 const prisma = new PrismaClient();
 
@@ -32,17 +35,22 @@ async function updateSergio() {
 }
 
 async function main() {
-  console.log("connecting");
-  // Connect the client
-  await prisma.$connect();
-  // await updateSergio();
+  app.get("/users", async (req, res) => {
+    // Connect the client
+    await prisma.$connect();
 
-  const allUsers = await prisma.user.findMany({
-    include: {
-      activities: true,
-    },
+    const allUsers = await prisma.user.findMany({
+      include: {
+        activities: true,
+      },
+    });
+    console.log(allUsers);
+    res.send(`Hello World! ${JSON.stringify(allUsers)}`);
   });
-  console.log(allUsers);
+
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
 }
 
 main()
@@ -50,8 +58,8 @@ main()
     throw e;
   })
   .finally(async () => {
-    console.log("disconnecting");
-    await prisma.$disconnect();
+    // console.log("disconnecting");
+    // await prisma.$disconnect();
   });
 
 export {};
