@@ -1,6 +1,7 @@
 // noinspection ES6CheckImport
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -36,6 +37,11 @@ async function updateSergio() {
 
 async function main() {
   console.log(`DB url: ${process.env.DATABASE_URL}`);
+  app.use(
+    cors({
+      origin: "*",
+    })
+  );
 
   app.get("/", async (req, res) => {
     res.send("You made it :)");
