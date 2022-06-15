@@ -65,7 +65,7 @@ async function main() {
 
   app.get("/users/:userId/activities", async (req, res) => {
     await prisma.$connect();
-    const userActivities = await prisma.user.findMany({
+    const userActivities = await prisma.user.findFirst({
       where: {
         id: req.params.userId,
       },
@@ -73,6 +73,7 @@ async function main() {
         activities: true,
       },
     });
+    console.log({ userActivities });
     res.send(JSON.stringify(userActivities));
   });
 }
