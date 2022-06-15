@@ -51,6 +51,19 @@ async function main() {
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });
+
+  app.get("/users/:userId/activities", async (req, res) => {
+    await prisma.$connect();
+    const userActivities = await prisma.user.findMany({
+      where: {
+        id: req.params.userId,
+      },
+      include: {
+        activities: true,
+      },
+    });
+    res.send(JSON.stringify(userActivities));
+  });
 }
 
 main()
