@@ -44,7 +44,7 @@ async function main() {
   );
 
   app.get("/", async (req, res) => {
-    res.send("You made it :)");
+    res.send("You made it :) Version 1.1");
   });
   app.get("/users", async (req, res) => {
     // Connect the client
